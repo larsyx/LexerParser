@@ -20,6 +20,8 @@ public class Lexer {
         tableSymbol.put("then", new Token("THEN"));
         tableSymbol.put("else", new Token("ELSE"));
         tableSymbol.put("while", new Token("WHILE"));
+        tableSymbol.put("end", new Token("END"));
+        tableSymbol.put("loop", new Token("LOOP"));
 
         tableSymbol.put(",", new Token("COMMA"));
         tableSymbol.put("\"", new Token("QUOTATIONMARKS"));
@@ -123,9 +125,21 @@ public class Lexer {
 
                     if (carattere == '=')
                         stato = 2;
+                    else if (carattere == '-')
+                        stato = 31;
                     else
                         stato=4;
                     break;
+
+                case 31:
+                    carattere = this.readChar();
+                    lessema += carattere;
+
+                    if (carattere == '-')
+                        return new Token("ASSIGN" );
+                    else
+                        stato = 0;
+
 
                 case 2:
                     return new Token("RELOP", "<=");
@@ -192,7 +206,7 @@ public class Lexer {
                         if(carattere != '\uFFFF')
                             retract();
                         lessema = lessema.substring(0, lessema.length() - 1);
-                        return new Token("NUM", lessema);
+                        return new Token("NUMBER", lessema);
                     }
                     break;
 
@@ -207,7 +221,7 @@ public class Lexer {
                         if(carattere != '\uFFFF')
                             retract();
                         lessema = lessema.substring(0, lessema.length() - 1);
-                        return new Token("NUM", lessema);
+                        return new Token("NUMBER", lessema);
                     }
 
                 case 14:
@@ -222,7 +236,7 @@ public class Lexer {
                         if(carattere != '\uFFFF')
                             retract();
                         lessema = lessema.substring(0, lessema.length() - 1);
-                        return new Token("NUM", lessema);
+                        return new Token("NUMBER", lessema);
                     }
 
                 case 15:
@@ -242,7 +256,7 @@ public class Lexer {
                         if(!isBlank(carattere))
                             retract();
                         lessema = lessema.substring(0, lessema.length() - 1);
-                        return new Token("NUM", lessema);
+                        return new Token("NUMBER", lessema);
                     }
 
             //id
@@ -315,7 +329,7 @@ public class Lexer {
                     break;
             }
         }
-        return null;
+        return new Token("EOF");
     }
 
 
