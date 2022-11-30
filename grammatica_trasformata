@@ -1,1 +1,8 @@
-S = Program EOF
+S -> Program EOF
+Program -> Stmt Program1
+Program1 -> ; Stmt Program1 | ε
+Stmt -> IF Expr THEN Stmt END IF | IF Expr THEN Stmt ELSE Stmt END IF | ID ASSIGN Expr | WHILE Expr LOOP Stmt END LOOP
+Expr ->  ID  Expr1  | NUMBER Expr1
+Expr1 -> RELOP Expr Expr1 | ε
+
+
