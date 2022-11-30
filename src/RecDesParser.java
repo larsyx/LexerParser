@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class RecDesParser {
 
     static int ptr;
+    static int ptrtmp;
     static char[] input;
 
     public static void main(String[] args) throws IOException {
@@ -68,7 +69,8 @@ public class RecDesParser {
     public static boolean program1() {
         // Check if Program1 -> ; Stmt Program1
         int fallback = ptr;
-        if( input[ptr++] == 'S' || input[ptr++] == 'E' || input[ptr++] == 'M' || input[ptr++] == 'I' ) {
+        ptrtmp = ptr;
+        if( input[ptr++] == 'S' && input[ptr++] == 'E' && input[ptr++] == 'M' && input[ptr++] == 'I' ) {
             if(!stmt()) {
                 ptr = fallback;
                 return false;
@@ -79,6 +81,7 @@ public class RecDesParser {
             }
             return true;
         }
+        ptr = ptrtmp;
         // Check Program1 -> ε
         return true;
     }
@@ -87,7 +90,8 @@ public class RecDesParser {
         int fallback = ptr;
 
         // Check if Stmt -> IF Expr THEN Stmt END IF
-        if(input[ptr++] == 'I' || input[ptr++] == 'F' ){
+        ptrtmp = ptr;
+        if(input[ptr++] == 'I' && input[ptr++] == 'F' ){
             if(!expr()){
                 ptr=fallback;
                 return false;
@@ -101,14 +105,16 @@ public class RecDesParser {
                 ptr=fallback;
                 return false;
             }
-
+            ptrtmp = ptr;
             // Check if Stmt -> IF Expr THEN Stmt ELSE Stmt END IF
-            if(input[ptr++] == 'E' || input[ptr++] == 'L' || input[ptr++] == 'S' || input[ptr++] == 'E'){
+            if(input[ptr++] == 'E' && input[ptr++] == 'L' && input[ptr++] == 'S' && input[ptr++] == 'E'){
                 if(!stmt()){
                     ptr=fallback;
                     return false;
                 }
             }
+            else
+                ptr = ptrtmp;
 
             if(input[ptr++] != 'E' || input[ptr++] != 'N' || input[ptr++] != 'D' || input[ptr++] != 'I' || input[ptr++] != 'F'){
                 ptr = fallback;
@@ -118,49 +124,54 @@ public class RecDesParser {
             return true;
         }
         // Check if Stmt -> ID ASSIGN Expr
-        else if(input[ptr++] == 'I' || input[ptr++] == 'D' ){
-            if(input[ptr++] != 'A' || input[ptr++] != 'S' || input[ptr++] != 'S' || input[ptr++] != 'I' || input[ptr++] != 'G' || input[ptr++] != 'N'){
-                ptr = fallback;
-                return false;
+        else{
+            ptr = ptrtmp;
+            if(input[ptr++] == 'I' && input[ptr++] == 'D' ){
+                if(input[ptr++] != 'A' || input[ptr++] != 'S' || input[ptr++] != 'S' || input[ptr++] != 'I' || input[ptr++] != 'G' || input[ptr++] != 'N'){
+                    ptr = fallback;
+                    return false;
+                }
+                if(!expr()){
+                    ptr=fallback;
+                    return false;
+                }
+                return true;
             }
-            if(!expr()){
-                ptr=fallback;
-                return false;
-            }
-            return true;
-        }
-        // Check if Stmt -> WHILE Expr LOOP Stmt END LOOP
-        else {
-            if (input[ptr++] != 'W' || input[ptr++] != 'H' || input[ptr++] != 'I' || input[ptr++] != 'L' || input[ptr++] != 'E') {
-                ptr = fallback;
-                return false;
-            }
-            if (!expr()){
-                ptr = fallback;
-                return false;
-            }
+            // Check if Stmt -> WHILE Expr LOOP Stmt END LOOP
+            else {
+                ptr=ptrtmp;
+                if (input[ptr++] != 'W' || input[ptr++] != 'H' || input[ptr++] != 'I' || input[ptr++] != 'L' || input[ptr++] != 'E') {
+                    ptr = fallback;
+                    return false;
+                }
+                if (!expr()){
+                    ptr = fallback;
+                    return false;
+                }
 
-            if (input[ptr++] != 'L' || input[ptr++] != 'O' || input[ptr++] != 'O' || input[ptr++] != 'P') {
-                ptr = fallback;
-                return false;
-            }
+                if (input[ptr++] != 'L' || input[ptr++] != 'O' || input[ptr++] != 'O' || input[ptr++] != 'P') {
+                    ptr = fallback;
+                    return false;
+                }
 
-            if (!stmt()){
-                ptr = fallback;
-                return false;
-            }
+                if (!stmt()){
+                    ptr = fallback;
+                    return false;
+                }
 
-            if (input[ptr++] != 'E' || input[ptr++] != 'N' || input[ptr++] != 'D' || input[ptr++] != 'L' || input[ptr++] != 'O' || input[ptr++] != 'O' || input[ptr++] != 'P'){
-                ptr = fallback;
-                return false;
+                if (input[ptr++] != 'E' || input[ptr++] != 'N' || input[ptr++] != 'D' || input[ptr++] != 'L' || input[ptr++] != 'O' || input[ptr++] != 'O' || input[ptr++] != 'P'){
+                    ptr = fallback;
+                    return false;
+                }
+                return true;
             }
-            return true;
         }
     }
 
     public static boolean expr() {
         int fallback = ptr;
-        if(input[ptr++] == 'I' || input[ptr++] == 'D' ) {
+        ptrtmp = ptr;
+        if(input[ptr++] == 'I' && input[ptr++] == 'D' ) {
             if(!expr1()){
                 ptr = fallback;
                 return false;
@@ -168,6 +179,7 @@ public class RecDesParser {
             return true;
         }
         else {
+            ptr=ptrtmp;
             if (input[ptr++] != 'N' || input[ptr++] != 'U' || input[ptr++] != 'M' || input[ptr++] != 'B' || input[ptr++] != 'E' || input[ptr++] != 'R') {
                 ptr=fallback;
                 return false;
@@ -185,7 +197,8 @@ public class RecDesParser {
         int fallback = ptr;
 
         // Check if Stmt -> RELOP Expr Expr1
-        if(input[ptr++] == 'R' || input[ptr++] == 'E' || input[ptr++] == 'L' || input[ptr++] == 'O' || input[ptr++] == 'P') {
+        ptrtmp = ptr;
+        if(input[ptr++] == 'R' && input[ptr++] == 'E' && input[ptr++] == 'L' && input[ptr++] == 'O' && input[ptr++] == 'P') {
             if(!expr()){
                 ptr = fallback;
                 return false;
@@ -195,6 +208,7 @@ public class RecDesParser {
                 return false;
             }
         }
+        ptr = ptrtmp;
         // Check if Stmt -> ε
         return true;
     }

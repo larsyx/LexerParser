@@ -25,7 +25,7 @@ public class Lexer {
 
         tableSymbol.put(",", new Token("COMMA"));
         tableSymbol.put("\"", new Token("QUOTATIONMARKS"));
-        tableSymbol.put(";", new Token("SEMICOLON"));
+        tableSymbol.put(";", new Token("SEMI"));
 
         tableSymbol.put("(", new Token("BRACKETROUNDOPEN"));
         tableSymbol.put(")", new Token("BRACKETROUNDCLOSE"));
