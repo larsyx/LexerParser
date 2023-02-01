@@ -24,7 +24,7 @@ public class RecDesParser {
 
         input = s.toCharArray();
         if(input.length < 2) {
-            System.out.println("syntax error");
+            System.out.println("Syntax error");
             System.exit(0);
         }
         ptr = 0;
