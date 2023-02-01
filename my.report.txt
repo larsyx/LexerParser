@@ -1,0 +1,8 @@
+invalid1.txt	Syntax error
+invalid2.txt	Syntax error
+invalid3.txt	Syntax error
+invalid4.txt	Syntax error
+valid1.txt	Input is valid
+valid2.txt	Input is valid
+valid3.txt	Input is valid
+valid4.txt	Input is valid

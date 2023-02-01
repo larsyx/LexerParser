@@ -21,7 +21,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
-                    <mainClass>main.RecDecParser</mainClass>
+                    <mainClass>RecDesParser</mainClass>
                 </configuration>
             </plugin>
         </plugins>

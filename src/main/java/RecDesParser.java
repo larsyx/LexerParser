@@ -32,7 +32,7 @@ public class RecDesParser {
         if((isValid) & (ptr == input.length)) {
             System.out.println("Input is valid");
         } else {
-            System.out.println("syntax error");
+            System.out.println("Syntax error");
         }
     }
 
