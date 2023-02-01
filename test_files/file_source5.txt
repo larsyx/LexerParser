@@ -1,4 +1,3 @@
-while x > 3 then
-    x <-- id;
-else
-    x <-- 1;
+while x loop
+    x <-- 3
+end loop

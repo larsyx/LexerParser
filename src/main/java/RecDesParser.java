@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.util.Scanner;
 
 
 public class RecDesParser {
@@ -9,7 +8,7 @@ public class RecDesParser {
     static char[] input;
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Inizio scansione");
+
         Lexer lexer=new Lexer();
         lexer.initialize(args[0]);
 
@@ -21,19 +20,19 @@ public class RecDesParser {
                 flag = false;
         }
         //test
-        System.out.println(s);
+        //System.out.println(s);
 
         input = s.toCharArray();
         if(input.length < 2) {
-            System.out.println("The input string lenght is invalid.");
+            System.out.println("syntax error");
             System.exit(0);
         }
         ptr = 0;
         boolean isValid = S();
         if((isValid) & (ptr == input.length)) {
-            System.out.println("The input string is valid.");
+            System.out.println("Input is valid");
         } else {
-            System.out.println("The input string is invalid.");
+            System.out.println("syntax error");
         }
     }
 
@@ -96,7 +95,7 @@ public class RecDesParser {
                 ptr=fallback;
                 return false;
             }
-            if( input[ptr++] != 'T' || input[ptr++] != 'H' || input[ptr++] != 'E' || input[ptr++] != 'N'){
+            if(input[ptr++] != 'T' || input[ptr++] != 'H' || input[ptr++] != 'E' || input[ptr++] != 'N'){
                 ptr = fallback;
                 return false;
             }
