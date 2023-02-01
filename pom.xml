@@ -20,7 +20,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
-                    <mainClass>RecDecParser</mainClass>
+                    <mainClass>main.RecDecParser</mainClass>
                 </configuration>
             </plugin>
         </plugins>
